@@ -1,32 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-.container {
-    font-family: 'Roboto', sans-serif;
-    height: 100vh;
-    width: 100wp;
-    background-color: black;
-    color: white;
-    /* text-align: center; */
+:root {
+    --blue: #c2e0fc;
+    --pink: #fdcce7;
+    --gray: #232931;
+}
 
+html {
+    font-family: 'Lobster', cursive;
+}
+
+body {
+    background: linear-gradient(to right top , var(--pink), var(--blue));
+    color: var(--gray);
+}
+
+.container {
+    width: 80%;
+    height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 2rem;
+}
 
+.title {
+    font-size: 3.5rem;
+    margin: 1.25em 0;
+    line-height: 1;
+    text-align: center;
 }
 
 .score {
-    font-size: 5rem;
+    font-size: 2.125rem;
     font-weight: bold;
+    margin-bottom: 2rem;
+    text-align: center;
+
+    display: flex;
+    gap: 10rem;
 }
 
-.outcome {
-    font-size: 2.5rem;
-    font-weight: bold;
-    height: 60px;
+
+.result {
+    font-size: 1.75rem;
+    margin-bottom: 1em;
+}
+
+.btns {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.btn {
+    outline: none;
+    border: none;
+    background-color: var(--gray);
+    color: #ddd;
+    padding: 3rem;
+    border-radius: 4px;
+
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+}
+
+.icon {
+    width: 4rem;
+    height: 4rem;
+    pointer-events: none;
+}
+
+.icon--white {
+    fill: var(--blue);
+}
+
+.icon--black {
+    fill: var(--gray);
+}
+
+/* MODAL */
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+
+    background-color: var(--gray);
+    opacity: .98;
+}
+
+.modal__text {
+    background-color: #ddd;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 1em 1.5em;
+    font-size: 2rem;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.modal__btn {
+    outline: none;
+    border: none;
+    font-size: 1.125rem;
+    background-color: var(--gray);
+    color: #ddd;
+    padding: 1em 1.25em;
+    margin-top: 2em;
+    border-radius: 3px;
+    letter-spacing: 1px;
+}
+
+/* TOGGLE CLASS */
+.hide {
+    display: none;
 }

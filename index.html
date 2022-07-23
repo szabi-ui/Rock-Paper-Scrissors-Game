@@ -8,9 +8,51 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- POP OUT WHEN ROUND IS DONE -->
+    <div class="modal hide">
+        <div class="modal__text">
+            <p class="modal__paragraph"></p>
+            <button class="modal__btn">Play Again</button>
+        </div>
+    </div>
+
     <div class="container">
-        <p class="score"></p>
-        <p class="outcome"></p>
+        <h1 class="title">Rock  Paper  Scissors</h1>
+        <div class="score">
+            <div class="score__user">
+                <svg class="icon icon--black">
+                    <use xlink:href="sprite.svg#icon-question" class="svg__user"></use>
+                </svg>
+                <p class="score__text">You : <span class="count__user">0</span></p>
+            </div>
+            <div class="score__pc">
+                <svg class="icon icon--black">
+                    <use xlink:href="sprite.svg#icon-question" class="svg__computer"></use>
+                </svg>
+                <p class="score__text">Computer : <span class="count__computer">0</span></p>
+            </div>
+            <!-- <p class="count__player">0</p>
+            <p class="count__computer">0</p> -->
+        </div>
+        <div class="result">First that gets to 5 wins the game!</div>
+        <div class="btns">
+            <button class="btn" value="rock">
+                <svg class="icon icon--white">
+                    <use xlink:href="sprite.svg#icon-hand-rock-o"></use>
+                </svg>
+            </button>
+            <button class="btn" value="paper">
+                <svg class="icon icon--white">
+                    <use xlink:href="sprite.svg#icon-hand-paper-o"></use>
+                </svg>
+            </button>
+            <button class="btn" value="scissors">
+                <svg class="icon icon--white">
+                    <use xlink:href="sprite.svg#icon-hand-scissors-o"></use>
+                </svg>
+            </button>
+            
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

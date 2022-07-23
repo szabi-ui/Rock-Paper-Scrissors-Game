@@ -1,110 +1,111 @@
 // VARIABLES
-const score = document.querySelector('.score');
-const outcome = document.querySelector('.outcome');
+const yourCount = document.querySelector('.count__user');
+const computerCount = document.querySelector('.count__computer');
+const resultPhrase = document.querySelector('.result');
+const btns = document.querySelector('.btns');
+// FOR SVG
+const svgUser = document.querySelector('.svg__user');
+const svgPC = document.querySelector('.svg__computer')
+// FOR MODAL
+const modal = document.querySelector('.modal');
+const modalBtn = document.querySelector('.modal__btn');
+// SCORE
+let pcCount = 0;
+let userCount = 0;
 
+// EVENT LISTENERS
+modalBtn.addEventListener('click', function () {
+    modal.classList.toggle('hide');
+})
 
+btns.addEventListener('click', function (e) {
+    // SET WHAT EACH PLAYER PICKS
+    let userPick = '';
+    let computerPick = computerPlay();
 
-// GENERATE A RANDOM  RESULT OUT OF: rock, paper, scissors
-function computerPlay(){
-    let num = Math.floor(Math.random() * 3);
-    if(num === 0) {
-        return "rock";
-    }
-    else if(num === 1) {
-        return "paper";
+    // CHECKS IF USER PICKED ONE OF THE VALUES
+    if (e.target.classList.contains('btn')) {
+        userPick = e.target.value;
     }
     else {
-        return "scissors";
+        resultPhrase.textContent = 'Pick a valid value: rock, paper, scissors';
+        return;
     }
-}
-
-
-// COMPARE PLAYER SELECTION WITH COMPUTER'S SELECTION
-function playRound(playerChoice, computerChoice) {
-
-    if(playerChoice === computerChoice) {
-        return "Tie! Pick again!";
-    }
-    else if(computerChoice === "paper" && playerChoice === "rock") {
-        return "You lost! Paper beats rock!"
-    }
-    else if(computerChoice === "paper" && playerChoice === "scissors") {
-        return "You win! Scissors cutts paper!"
-    }
-    else if(computerChoice === "scissors" && playerChoice === "rock") {
-        return "You win! Rock beats scissors!";
-    }
-    else if(computerChoice === "scissors" && playerChoice === "paper") {
-        return "You lost! Scissors cutts paper!"
-    }
-    else if(computerChoice === "rock" && playerChoice === "scissors") {
-        return "You lost! Rock breaks scissors!"
-    }else if(computerChoice === "rock" && playerChoice === "paper") {
-        return "You win! Paper covers rock!"
-    }else {
-        console.log("Pick a valid value: rock, paper, scissors");
-    }
-}
-
-// STARTS THE GAME
-function game() {
-    let playerCount = 0;
-    let computerCount = 0;
-    update(playerCount, computerCount);
     
-    while (playerCount < 5 && computerCount < 5) {
-        let playerSelection = prompt("Enter your pick! May it be rock, paper, or scissors");
-        let computerSelection = computerPlay();
-        let result = playRound(playerSelection, computerSelection);
-        
-        if(result === "Tie! Pick again!") {
-            continue;
-        } 
-        else if(result === "You lost! Paper beats rock!") {
-            computerCount++;
-            update(playerCount, computerCount);
-        }
-        else if(result === "You lost! Scissors cutts paper!") {
-            computerCount++;
-            update(playerCount, computerCount);
-        }
-        else if(result === "You lost! Rock breaks scissors!") {
-            computerCount++;
-        }
-        else if(result === "You win! Scissors cutts paper!") {
-            playerCount++;
-            update(playerCount, computerCount);
-        }
-        else if(result === "You win! Rock beats scissors!") {
-            playerCount++;
-            update(playerCount, computerCount);
-        }
-        else if(result === "You win! Paper covers rock!") {
-            playerCount++;
-            update(playerCount, computerCount);
-        }
-    }
+    displaySvg(userPick, computerPick);
+    playRound(userPick, computerPick);
+    ifWinner();
+})
 
-    // UPDATE OUTCOME, the paragraph beneath score
-    if(playerCount === 5) {
-        outcome.textContent = "Yay, you won!";
-    }
-    else if(computerCount === 5) {
-        outcome.textContent = "O no, you lose!";
-    }
-
+// GETS COMPUTER RANDOM PICK
+function computerPlay(){
+    let values = ['rock', 'paper', 'scissors'];
+    let ndx = Math.floor(Math.random() * 3);
+    return values[ndx];
 }
-
-
-// CALL  Functions
-game();
-
-
-// THIS BLOCK IS ADDED BY ME AS AN EXTRA
-// it updates score variable in viewport
-function update(count1, count2) {
-    score.textContent = `${count1} : ${count2}`;
+// PLAYS A ROUND
+function playRound(userValue, pcValue) {
+    if(userValue === pcValue) {
+        resultPhrase.textContent = 'Tie! Pick again!';
+    }
+    else if(userValue === 'scissors' && pcValue === 'paper') {
+        userCount++;
+        yourCount.textContent = userCount;
+        resultPhrase.textContent = 'You win! Scissors cutts paper!';
+    }
+    else if(userValue === 'rock' && pcValue === 'scissors') {
+        userCount++;
+        yourCount.textContent = userCount;
+        resultPhrase.textContent = 'You win! Rock beats scissors!';
+    }
+    else if(userValue === 'paper' && pcValue === 'rock') {
+        userCount++;
+        yourCount.textContent = userCount;
+        resultPhrase.textContent = 'You win! Paper covers rock!';
+    }
+    else if(userValue === 'paper' && pcValue === 'scissors') {
+        pcCount++;
+        computerCount.textContent = pcCount;
+        resultPhrase.textContent = 'You lost! Scissors cutts paper!';
+    }
+    else if(userValue === 'scissors' && pcValue === 'rock') {
+        pcCount++;
+        computerCount.textContent = pcCount;
+        resultPhrase.textContent = 'You lost! Rock breaks scissors!';
+    }
+    else if(userValue === 'rock' && pcValue === 'paper') {
+        pcCount++;
+        computerCount.textContent = pcCount;
+        resultPhrase.textContent = 'You lost! Paper beats rock!';
+    }
 }
-
-
-
+// DISPLAYS LAST ROUND PICKS
+function displaySvg(user, pc) {
+    if(user) {
+        svgUser.setAttribute('xlink:href', `sprite.svg#icon-hand-${user}-o`);
+    }
+    if(pc) {
+        svgPC.setAttribute('xlink:href', `sprite.svg#icon-hand-${pc}-o`)
+    }
+}
+// CHECKS IF WINNER
+function ifWinner(){
+    if(userCount === 5 ) {
+        modal.firstElementChild.firstElementChild.textContent = 'Congratulations, you won!';
+        resetScore();
+    }else if(pcCount === 5){
+        modal.firstElementChild.firstElementChild.textContent = 'Oh no, you lost this time!';
+        resetScore();
+    }
+}
+// RESETS SCORE
+function resetScore() {
+    modal.classList.toggle('hide');
+    userCount = 0;
+    pcCount = 0;
+    yourCount.textContent = userCount;
+    computerCount.textContent = pcCount;
+    svgUser.setAttribute('xlink:href', 'sprite.svg#icon-question');
+    svgPC.setAttribute('xlink:href', 'sprite.svg#icon-question');
+    resultPhrase.textContent = 'First that gets to 5 wins the game!';
+}
