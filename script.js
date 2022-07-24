@@ -1,23 +1,25 @@
-// VARIABLES
+// *****VARIABLES*****
+
+// VARIABLES FROM HTML
 const yourCount = document.querySelector('.count__user');
 const computerCount = document.querySelector('.count__computer');
 const resultPhrase = document.querySelector('.result');
 const btns = document.querySelector('.btns');
-// FOR SVG
+// VARIABLES FOR SVG
 const svgUser = document.querySelector('.svg__user');
 const svgPC = document.querySelector('.svg__computer')
-// FOR MODAL
+// VARIABLES FOR MODAL
 const modal = document.querySelector('.modal');
 const modalBtn = document.querySelector('.modal__btn');
-// SCORE
+// VARIABLES SCORE
 let pcCount = 0;
 let userCount = 0;
 
-// EVENT LISTENERS
+// *****EVENT LISTENERS*****
+
 modalBtn.addEventListener('click', function () {
     modal.classList.toggle('hide');
 })
-
 btns.addEventListener('click', function (e) {
     // SET WHAT EACH PLAYER PICKS
     let userPick = '';
@@ -37,6 +39,8 @@ btns.addEventListener('click', function (e) {
     ifWinner();
 })
 
+// *****FUNCTIONS*****
+
 // GETS COMPUTER RANDOM PICK
 function computerPlay(){
     let values = ['rock', 'paper', 'scissors'];
@@ -48,35 +52,19 @@ function playRound(userValue, pcValue) {
     if(userValue === pcValue) {
         resultPhrase.textContent = 'Tie! Pick again!';
     }
-    else if(userValue === 'scissors' && pcValue === 'paper') {
+    else if(userValue === 'scissors' && pcValue === 'paper' ||
+            userValue === 'rock' && pcValue === 'scissors' ||
+            userValue === 'paper' && pcValue === 'rock') {
         userCount++;
         yourCount.textContent = userCount;
         resultPhrase.textContent = 'You win! Scissors cutts paper!';
     }
-    else if(userValue === 'rock' && pcValue === 'scissors') {
-        userCount++;
-        yourCount.textContent = userCount;
-        resultPhrase.textContent = 'You win! Rock beats scissors!';
-    }
-    else if(userValue === 'paper' && pcValue === 'rock') {
-        userCount++;
-        yourCount.textContent = userCount;
-        resultPhrase.textContent = 'You win! Paper covers rock!';
-    }
-    else if(userValue === 'paper' && pcValue === 'scissors') {
+    else if(userValue === 'paper' && pcValue === 'scissors' ||
+            userValue === 'scissors' && pcValue === 'rock' ||
+            userValue === 'rock' && pcValue === 'paper') {
         pcCount++;
         computerCount.textContent = pcCount;
         resultPhrase.textContent = 'You lost! Scissors cutts paper!';
-    }
-    else if(userValue === 'scissors' && pcValue === 'rock') {
-        pcCount++;
-        computerCount.textContent = pcCount;
-        resultPhrase.textContent = 'You lost! Rock breaks scissors!';
-    }
-    else if(userValue === 'rock' && pcValue === 'paper') {
-        pcCount++;
-        computerCount.textContent = pcCount;
-        resultPhrase.textContent = 'You lost! Paper beats rock!';
     }
 }
 // DISPLAYS LAST ROUND PICKS
